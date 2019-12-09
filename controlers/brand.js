@@ -10,7 +10,7 @@ const getBrands = (request, response) => {
 };
 
 const getBrandById = (request, response) => {
-  const product_id = parseInt(request.params.product_id);
+  const brand_id = parseInt(request.params.brand_id);
 
   pool.query(
     "SELECT * FROM Brands WHERE brand_id = $1",
@@ -25,17 +25,11 @@ const getBrandById = (request, response) => {
 };
 
 const createBrand = (request, response) => {
-  const {
-    product_name,
-    artikul,
-    description_of,
-    image_url,
-    price
-  } = request.body;
+  const { brand_name, country_of_brand } = request.body;
 
   pool.query(
-    "INSERT INTO Brands (product_name, artikul, description_of, image_url, price) VALUES ($1, $2, $3, $4, $5)",
-    [product_name, artikul, description_of, image_url, price],
+    "INSERT INTO Brands (brand_name,country_of_brand) VALUES ($1, $2)",
+    [brand_name, country_of_brand],
     (error, result) => {
       if (error) {
         throw error;
@@ -46,46 +40,40 @@ const createBrand = (request, response) => {
 };
 
 const updateBrand = (request, response) => {
-  const product_id = parseInt(request.params.product_id);
-  const {
-    product_name,
-    artikul,
-    description_of,
-    image_url,
-    price
-  } = request.body;
+  const brand_id = parseInt(request.params.brand_id);
+  const { brand_name, country_of_brand } = request.body;
 
   pool.query(
-    "UPDATE Brands SET product_name=$2, artikul=$3, description_of=$4, image_url=$5, price=$6 WHERE product_id = $1",
-    [product_id, product_name, artikul, description_of, image_url, price],
+    "UPDATE Brands SET brand_name=$2, country_of_brand=$3 WHERE brand_id = $1",
+    [brand_name, country_of_brand],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`Product modified with ID: ${product_id}`);
+      response.status(200).send(`Brand modified with ID: ${brand_id}`);
     }
   );
 };
 
-const deleteProduct = (request, response) => {
-  const product_id = parseInt(request.params.product_id);
+const deleteBrand = (request, response) => {
+  const brand_id = parseInt(request.params.brand_id);
 
   pool.query(
-    "DELETE FROM Products WHERE product_id = $1",
-    [product_id],
+    "DELETE FROM Brands WHERE brand_id = $1",
+    [brand_id],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`Product deleted with ID: ${product_id}`);
+      response.status(200).send(`Brand deleted with ID: ${brand_id}`);
     }
   );
 };
 
 module.exports = {
-  getProducts,
-  getProductById,
-  createProduct,
-  updateProduct,
-  deleteProduct
+  getBrands,
+  getBrandById,
+  createBrand,
+  updateBrand,
+  deleteBrand
 };

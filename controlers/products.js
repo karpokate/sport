@@ -1,4 +1,4 @@
-const pool = require("../connect");
+const pool = require("./connect.js");
 
 const getProducts = (request, response) => {
   pool.query(
@@ -33,12 +33,22 @@ const createProduct = (request, response) => {
     artikul,
     description_of,
     image_url,
-    price
+    price,
+    quantity,
+    date_of
   } = request.body;
 
   pool.query(
-    "INSERT INTO Products (product_name, artikul, description_of, image_url, price) VALUES ($1, $2, $3, $4, $5)",
-    [product_name, artikul, description_of, image_url, price],
+    "INSERT INTO Products (product_name, artikul, description_of, image_url, price, quantity, date_of) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    [
+      product_name,
+      artikul,
+      description_of,
+      image_url,
+      price,
+      quantity,
+      date_of
+    ],
     (error, result) => {
       if (error) {
         throw error;
@@ -55,12 +65,23 @@ const updateProduct = (request, response) => {
     artikul,
     description_of,
     image_url,
-    price
+    price,
+    quantity,
+    date_of
   } = request.body;
 
   pool.query(
-    "UPDATE Products SET product_name=$2, artikul=$3, description_of=$4, image_url=$5, price=$6 WHERE product_id = $1",
-    [product_id, product_name, artikul, description_of, image_url, price],
+    "UPDATE Products SET product_name=$2, artikul=$3, description_of=$4, image_url=$5, price=$6, quantity=$7, date_of=$8 WHERE product_id = $1",
+    [
+      product_id,
+      product_name,
+      artikul,
+      description_of,
+      image_url,
+      price,
+      quantity,
+      date_of
+    ],
     (error, results) => {
       if (error) {
         throw error;
