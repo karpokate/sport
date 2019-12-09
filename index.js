@@ -2,9 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
-const pool = require("./db/singleton");
 
-const db = require("./queries");
+//const dbB = require("./controlers/brand");
+const dbC = require("./controlers/category");
+const dbP = require("./controlers/products");
+
+const brandRouter = require("./routs/brandRouter");
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -20,20 +23,26 @@ app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-app.get("/products", db.getProducts);
-app.get("/products/:product_id", db.getProductById);
-app.post("/products", db.createProduct);
-app.put("/products/:product_id", db.updateProduct);
-app.delete("/products/:product_id", db.deleteProduct);
+app.get("/products", dbP.getProducts);
+app.get("/products/:product_id", dbP.getProductById);
+app.post("/products", dbP.createProduct);
+app.put("/products/:product_id", dbP.updateProduct);
+app.delete("/products/:product_id", dbP.deleteProduct);
 
-app.get("/brands", db.getBrands);
-app.get("/brands/:brand_id", db.getBrandById);
-app.post("/brands", db.createBrand);
-app.put("/brands/:brand_id", db.updateBrand);
-app.delete("/brands/:brand_id", db.deleteBrand);
+/*app.get("/brands", dbB.getBrands);
+app.get("/brands/:brand_id", dbB.getBrandById);
+app.post("/brands", dbB.createBrand);
+app.put("/brands/:brand_id", dbB.updateBrand);
+app.delete("/brands/:brand_id", dbB.deleteBrand);
+*/
+app.get("/categories", dbC.getCategories);
+app.get("/categories/:category_id", dbC.getCategoryById);
+app.post("/categories", dbC.createCategory);
+app.put("/categories/:category_id", dbC.updateCategory);
+app.delete("/categories/:category_id", dbC.deleteCategory);
 
-app.get("/categories", db.getCategories);
-app.get("/categories/:category_id", db.getCategoryById);
-app.post("/categories", db.createCategory);
-app.put("/categories/:category_id", db.updateCategory);
-app.delete("/categories/:category_id", db.deleteCategory);
+brandRouter.GET();
+brandRouter.GET_ONE;
+brandRouter.UPDATE;
+brandRouter.POST;
+brandRouter.DELETE;

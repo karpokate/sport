@@ -19,7 +19,8 @@ CREATE TABLE brands (
 
 CREATE TABLE categories(
   category_id SERIAL PRIMARY KEY,
-  category_name VARCHAR(256)
+  category_name VARCHAR(256),
+  category_description VARCHAR(256) 
 );
 
 

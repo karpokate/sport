@@ -1,5 +1,4 @@
 const pool = require("../connect.js");
-
 const getCategories = (request, response) => {
   pool.query(
     "SELECT * FROM Categories ORDER BY category_id ASC",
@@ -28,11 +27,11 @@ const getCategoryById = (request, response) => {
 };
 
 const createCategory = (request, response) => {
-  const { category_name } = request.body;
+  const { category_name, category_description } = request.body;
 
   pool.query(
-    "INSERT INTO Categories (category_name) VALUES ($1)",
-    [category_name],
+    "INSERT INTO Categories (category_name, category_description) VALUES ($1, $2)",
+    [category_name, category_description],
     (error, result) => {
       if (error) {
         throw error;
@@ -44,11 +43,11 @@ const createCategory = (request, response) => {
 
 const updateCategory = (request, response) => {
   const category_id = parseInt(request.params.category_id);
-  const { category_name } = request.body;
+  const { category_name, category_description } = request.body;
 
   pool.query(
-    "UPDATE Categories SET category_name=$2 WHERE category_id = $1",
-    [category_name],
+    "UPDATE Categories SET category_name=$2, category_description=$3 WHERE category_id = $1",
+    [category_id, category_name, category_description],
     (error, results) => {
       if (error) {
         throw error;

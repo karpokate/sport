@@ -1,4 +1,4 @@
-const pool = require("./connect.js");
+const pool = require("../connect.js");
 
 const getProducts = (request, response) => {
   pool.query(

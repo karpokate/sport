@@ -45,7 +45,7 @@ const updateBrand = (request, response) => {
 
   pool.query(
     "UPDATE Brands SET brand_name=$2, country_of_brand=$3 WHERE brand_id = $1",
-    [brand_name, country_of_brand],
+    [brand_id, brand_name, country_of_brand],
     (error, results) => {
       if (error) {
         throw error;
